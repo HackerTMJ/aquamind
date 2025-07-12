@@ -11,14 +11,14 @@ export default function AuthLayout() {
 
   // If user is already authenticated, redirect to main app
   if (session) {
-    return <Redirect href="/(tabs)" />;
+    return <Redirect href='/(tabs)' />;
   }
 
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="login" />
-      <Stack.Screen name="register" />
-      <Stack.Screen name="forgot-password" />
+      <Stack.Screen name='login' />
+      <Stack.Screen name='register' />
+      <Stack.Screen name='forgot-password' />
     </Stack>
   );
 }

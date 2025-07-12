@@ -28,6 +28,7 @@ AquaMind integrates AI, modern UI, smart tracking, GitHub-based updates, and opt
 - 👥 Community-driven knowledge sharing
 - 📱 Mobile-first, offline-capable design
 - 🔄 Automatic updates via GitHub releases
+- 🌐 Multi-language support (English and Chinese)
 
 ---
 
@@ -118,6 +119,7 @@ AquaMind integrates AI, modern UI, smart tracking, GitHub-based updates, and opt
 - Share tank progress and achievements
 - Species-specific discussion groups
 - Local fishkeeper meetups
+- Multi-language community support (English/Chinese)
 
 ---
 
@@ -134,6 +136,7 @@ AquaMind integrates AI, modern UI, smart tracking, GitHub-based updates, and opt
 | **Notifications** | Expo Push Notifications | Cross-platform push messaging |
 | **Updates** | Expo Updates + GitHub | OTA updates and release management |
 | **Analytics** | Expo Analytics | Usage tracking and optimization |
+| **Internationalization** | react-i18next | Multi-language support (English, Chinese) |
 
 ### Development Tools
 - **TypeScript** for type safety
@@ -505,6 +508,23 @@ aquamind/
 │   │   ├── auth.ts
 │   │   ├── database.ts
 │   │   └── types.ts
+│   ├── i18n/                         # Internationalization
+│   │   ├── index.ts                  # i18n configuration
+│   │   ├── en/                       # English translations
+│   │   │   ├── common.json
+│   │   │   ├── auth.json
+│   │   │   ├── tanks.json
+│   │   │   ├── fish.json
+│   │   │   ├── ai.json
+│   │   │   └── community.json
+│   │   ├── zh/                       # Chinese translations
+│   │   │   ├── common.json
+│   │   │   ├── auth.json
+│   │   │   ├── tanks.json
+│   │   │   ├── fish.json
+│   │   │   ├── ai.json
+│   │   │   └── community.json
+│   │   └── resources.ts              # Translation resources
 │   ├── ai/                           # AI service integrations
 │   │   ├── vision.ts                 # Computer vision API
 │   │   ├── recommendations.ts        # AI recommendations
@@ -595,6 +615,7 @@ aquamind/
 
 #### `/lib` - Core Application Logic
 - `/supabase` - Backend integration and types
+- `/i18n` - Internationalization with English and Chinese support
 - `/ai` - AI service integrations and utilities
 - `/database` - Local database models and sync logic
 - `/storage` - File upload and cloud storage
@@ -616,6 +637,7 @@ aquamind/
 - **Offline-First**: Graceful degradation when offline
 - **Data-Dense but Clean**: Show important information without clutter
 - **Progressive Disclosure**: Advanced features hidden until needed
+- **Multi-Language Support**: Seamless language switching between English and Chinese
 
 ### Navigation Structure
 
@@ -1096,8 +1118,9 @@ interface RevenueModel {
 ### Key Considerations
 - **Performance**: Optimize for older Android devices (API level 21+)
 - **Accessibility**: Follow WCAG 2.1 AA guidelines
-- **Internationalization**: Support for multiple languages (Spanish, French, German)
+- **Internationalization**: Support for English and Chinese languages with proper text rendering
 - **Compliance**: GDPR compliance for EU users, COPPA for under-13 users
+- **Cultural Adaptation**: Region-specific content and cultural considerations for Chinese users
 
 ### Technical Debt Prevention
 - Regular code reviews and pair programming
@@ -1110,6 +1133,8 @@ interface RevenueModel {
 - Social media presence and content marketing
 - Partnerships with aquarium stores and veterinarians
 - Open-source contributions and transparency
+- Multi-language community management and support
+- Region-specific marketing for English and Chinese speaking markets
 
 ---
 

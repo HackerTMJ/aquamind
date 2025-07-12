@@ -7,16 +7,22 @@ export default function MonitoringScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text variant="headlineSmall" style={[styles.title, { color: theme.colors.onBackground }]}>
+      <Text variant='headlineSmall' style={[styles.title, { color: theme.colors.onBackground }]}>
         Water Monitoring
       </Text>
-      
+
       <Card style={styles.emptyCard}>
         <Card.Content style={styles.emptyContent}>
-          <Text variant="titleMedium" style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}>
+          <Text
+            variant='titleMedium'
+            style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}
+          >
             No monitoring data yet
           </Text>
-          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 8 }}>
+          <Text
+            variant='bodyMedium'
+            style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 8 }}
+          >
             Start monitoring your water parameters to keep your fish healthy
           </Text>
         </Card.Content>

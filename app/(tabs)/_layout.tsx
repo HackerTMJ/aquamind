@@ -27,7 +27,7 @@ export default function TabLayout() {
 
   // If user is not authenticated, redirect to login
   if (!session) {
-    return <Redirect href="/(auth)/login" />;
+    return <Redirect href='/(auth)/login' />;
   }
 
   return (
@@ -37,40 +37,41 @@ export default function TabLayout() {
         // Disable the static render of the header on web
         // to prevent a hydration error in React Navigation v6.
         headerShown: useClientOnlyValue(false, true),
-      }}>
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='home' color={color} />,
         }}
       />
       <Tabs.Screen
-        name="tanks"
+        name='tanks'
         options={{
           title: 'My Tanks',
-          tabBarIcon: ({ color }) => <TabBarIcon name="tint" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='tint' color={color} />,
         }}
       />
       <Tabs.Screen
-        name="fish"
+        name='fish'
         options={{
           title: 'Fish',
-          tabBarIcon: ({ color }) => <TabBarIcon name="plus" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='plus' color={color} />,
         }}
       />
       <Tabs.Screen
-        name="monitoring"
+        name='monitoring'
         options={{
           title: 'Monitor',
-          tabBarIcon: ({ color }) => <TabBarIcon name="line-chart" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='line-chart' color={color} />,
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name='profile'
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name='user' color={color} />,
         }}
       />
     </Tabs>

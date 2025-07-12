@@ -9,35 +9,31 @@ export default function ProfileScreen() {
   const theme = useTheme();
 
   const handleSignOut = async () => {
-    Alert.alert(
-      'Sign Out',
-      'Are you sure you want to sign out?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Sign Out',
-          style: 'destructive',
-          onPress: async () => {
-            await signOut();
-            router.replace('/(auth)/login');
-          },
+    Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Sign Out',
+        style: 'destructive',
+        onPress: async () => {
+          await signOut();
+          router.replace('/(auth)/login');
         },
-      ]
-    );
+      },
+    ]);
   };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text variant="headlineSmall" style={[styles.title, { color: theme.colors.onBackground }]}>
+      <Text variant='headlineSmall' style={[styles.title, { color: theme.colors.onBackground }]}>
         Profile
       </Text>
-      
+
       <Card style={styles.card}>
         <Card.Content>
-          <Text variant="titleMedium" style={{ marginBottom: 8 }}>
+          <Text variant='titleMedium' style={{ marginBottom: 8 }}>
             Account Information
           </Text>
-          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
+          <Text variant='bodyMedium' style={{ color: theme.colors.onSurfaceVariant }}>
             Email: {user?.email}
           </Text>
         </Card.Content>
@@ -47,23 +43,23 @@ export default function ProfileScreen() {
         <Card.Content>
           <List.Section>
             <List.Item
-              title="Settings"
-              description="App preferences and notifications"
-              left={props => <List.Icon {...props} icon="cog" />}
+              title='Settings'
+              description='App preferences and notifications'
+              left={props => <List.Icon {...props} icon='cog' />}
               onPress={() => console.log('Settings')}
             />
             <Divider />
             <List.Item
-              title="Help & Support"
-              description="Get help using AquaMind"
-              left={props => <List.Icon {...props} icon="help-circle" />}
+              title='Help & Support'
+              description='Get help using AquaMind'
+              left={props => <List.Icon {...props} icon='help-circle' />}
               onPress={() => console.log('Help')}
             />
             <Divider />
             <List.Item
-              title="About"
-              description="App version and information"
-              left={props => <List.Icon {...props} icon="information" />}
+              title='About'
+              description='App version and information'
+              left={props => <List.Icon {...props} icon='information' />}
               onPress={() => console.log('About')}
             />
           </List.Section>
@@ -71,7 +67,7 @@ export default function ProfileScreen() {
       </Card>
 
       <Button
-        mode="outlined"
+        mode='outlined'
         onPress={handleSignOut}
         style={styles.signOutButton}
         textColor={theme.colors.error}

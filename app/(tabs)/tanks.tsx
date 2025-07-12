@@ -10,24 +10,30 @@ export default function TanksScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
-        <Text variant="headlineSmall" style={[styles.title, { color: theme.colors.onBackground }]}>
+        <Text variant='headlineSmall' style={[styles.title, { color: theme.colors.onBackground }]}>
           My Tanks
         </Text>
-        
+
         <Card style={styles.emptyCard}>
           <Card.Content style={styles.emptyContent}>
-            <Text variant="titleMedium" style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}>
+            <Text
+              variant='titleMedium'
+              style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}
+            >
               No tanks yet
             </Text>
-            <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 8 }}>
+            <Text
+              variant='bodyMedium'
+              style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 8 }}
+            >
               Add your first tank to get started with AquaMind
             </Text>
           </Card.Content>
         </Card>
       </ScrollView>
-      
+
       <FAB
-        icon="plus"
+        icon='plus'
         style={[styles.fab, { backgroundColor: theme.colors.primary }]}
         onPress={() => {
           // Navigate to add tank screen

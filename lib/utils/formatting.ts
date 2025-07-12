@@ -5,11 +5,7 @@
 /**
  * Format numbers for display
  */
-export const formatNumber = (
-  value: number,
-  decimals: number = 2,
-  unit?: string
-): string => {
+export const formatNumber = (value: number, decimals: number = 2, unit?: string): string => {
   const formatted = value.toFixed(decimals);
   return unit ? `${formatted} ${unit}` : formatted;
 };
@@ -60,7 +56,7 @@ export const getRelativeTime = (date: Date | string): string => {
   if (diffMins < 60) return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
   if (diffHours < 24) return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
   if (diffDays < 7) return `${diffDays} day${diffDays !== 1 ? 's' : ''} ago`;
-  
+
   return formatDate(dateObj);
 };
 
@@ -83,9 +79,7 @@ export const generateId = (): string => {
  * Capitalize first letter of each word
  */
 export const capitalizeWords = (str: string): string => {
-  return str.replace(/\w\S*/g, (txt) => 
-    txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
-  );
+  return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase());
 };
 
 /**
@@ -111,7 +105,7 @@ export const debounce = <T extends (...args: any[]) => any>(
   wait: number
 ): ((...args: Parameters<T>) => void) => {
   let timeout: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
     timeout = setTimeout(() => func(...args), wait);

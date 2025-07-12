@@ -137,13 +137,13 @@ export const validateWaterParameter = (
         errors.push('Temperature must be between -5°C and 50°C');
       }
       break;
-    
+
     case 'ph':
       if (value < 0 || value > 14) {
         errors.push('pH must be between 0 and 14');
       }
       break;
-    
+
     case 'ammonia_ppm':
     case 'nitrite_ppm':
     case 'nitrate_ppm':
@@ -154,20 +154,20 @@ export const validateWaterParameter = (
         errors.push('Concentration seems unusually high (max 1000 ppm)');
       }
       break;
-    
+
     case 'salinity_ppt':
       if (value < 0 || value > 50) {
         errors.push('Salinity must be between 0 and 50 ppt');
       }
       break;
-    
+
     case 'hardness_dgh':
     case 'alkalinity_dkh':
       if (value < 0 || value > 50) {
         errors.push('Hardness must be between 0 and 50 degrees');
       }
       break;
-    
+
     case 'dissolved_oxygen_ppm':
       if (value < 0 || value > 20) {
         errors.push('Dissolved oxygen must be between 0 and 20 ppm');

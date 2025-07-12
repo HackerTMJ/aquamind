@@ -25,6 +25,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     ...FontAwesome.font,
   });
@@ -54,13 +55,13 @@ function RootLayoutNav() {
     <AuthProvider>
       <AppThemeProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-            <Stack.Screen name="tank" options={{ headerShown: false }} />
-            <Stack.Screen name="fish" options={{ headerShown: false }} />
-            <Stack.Screen name="community" options={{ headerShown: false }} />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+            <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+            <Stack.Screen name='modal' options={{ presentation: 'modal' }} />
+            <Stack.Screen name='tank' options={{ headerShown: false }} />
+            <Stack.Screen name='fish' options={{ headerShown: false }} />
+            <Stack.Screen name='community' options={{ headerShown: false }} />
           </Stack>
         </ThemeProvider>
       </AppThemeProvider>

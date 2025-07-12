@@ -17,23 +17,29 @@ export default function HomeScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       <View style={styles.headerContainer}>
-        <Text variant="headlineMedium" style={[styles.greeting, { color: theme.colors.onBackground }]}>
+        <Text
+          variant='headlineMedium'
+          style={[styles.greeting, { color: theme.colors.onBackground }]}
+        >
           {getGreeting()}!
         </Text>
-        <Text variant="bodyLarge" style={{ color: theme.colors.onSurfaceVariant }}>
+        <Text variant='bodyLarge' style={{ color: theme.colors.onSurfaceVariant }}>
           Welcome to AquaMind
         </Text>
       </View>
 
       <Card style={styles.card}>
         <Card.Content>
-          <Text variant="titleMedium" style={{ marginBottom: 8 }}>
+          <Text variant='titleMedium' style={{ marginBottom: 8 }}>
             Getting Started
           </Text>
-          <Text variant="bodyMedium" style={{ marginBottom: 16, color: theme.colors.onSurfaceVariant }}>
+          <Text
+            variant='bodyMedium'
+            style={{ marginBottom: 16, color: theme.colors.onSurfaceVariant }}
+          >
             Start your aquarium journey by adding your first tank and fish.
           </Text>
-          <Button mode="contained" onPress={() => console.log('Add tank')}>
+          <Button mode='contained' onPress={() => console.log('Add tank')}>
             Add Your First Tank
           </Button>
         </Card.Content>
@@ -41,31 +47,31 @@ export default function HomeScreen() {
 
       <Card style={styles.card}>
         <Card.Content>
-          <Text variant="titleMedium" style={{ marginBottom: 8 }}>
+          <Text variant='titleMedium' style={{ marginBottom: 8 }}>
             Quick Stats
           </Text>
           <View style={styles.statsContainer}>
             <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={{ color: theme.colors.primary }}>
+              <Text variant='headlineSmall' style={{ color: theme.colors.primary }}>
                 0
               </Text>
-              <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
+              <Text variant='bodySmall' style={{ color: theme.colors.onSurfaceVariant }}>
                 Tanks
               </Text>
             </View>
             <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={{ color: theme.colors.secondary }}>
+              <Text variant='headlineSmall' style={{ color: theme.colors.secondary }}>
                 0
               </Text>
-              <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
+              <Text variant='bodySmall' style={{ color: theme.colors.onSurfaceVariant }}>
                 Fish
               </Text>
             </View>
             <View style={styles.statItem}>
-              <Text variant="headlineSmall" style={{ color: theme.colors.tertiary }}>
+              <Text variant='headlineSmall' style={{ color: theme.colors.tertiary }}>
                 0
               </Text>
-              <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
+              <Text variant='bodySmall' style={{ color: theme.colors.onSurfaceVariant }}>
                 Tests
               </Text>
             </View>
@@ -75,10 +81,10 @@ export default function HomeScreen() {
 
       <Card style={styles.card}>
         <Card.Content>
-          <Text variant="titleMedium" style={{ marginBottom: 8 }}>
+          <Text variant='titleMedium' style={{ marginBottom: 8 }}>
             Recent Activity
           </Text>
-          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
+          <Text variant='bodyMedium' style={{ color: theme.colors.onSurfaceVariant }}>
             No recent activity yet. Start by adding some tanks and fish!
           </Text>
         </Card.Content>

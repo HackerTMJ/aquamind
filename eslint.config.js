@@ -19,19 +19,24 @@ export default [
           jsx: true,
         },
       },
+      globals: {
+        console: 'readonly',
+        require: 'readonly',
+        __DEV__: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': typescriptPlugin,
-      'react': reactPlugin,
+      react: reactPlugin,
       'react-hooks': reactHooksPlugin,
-      'prettier': prettierPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       ...typescriptPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
       ...reactHooksPlugin.configs.recommended.rules,
       ...prettierConfig.rules,
-      
+
       // Custom rules for React Native/Expo
       'react/react-in-jsx-scope': 'off', // Not needed in React 17+
       'react/prop-types': 'off', // Using TypeScript for type checking
@@ -40,7 +45,7 @@ export default [
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
       'prettier/prettier': 'error',
-      
+
       // React Native specific
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',

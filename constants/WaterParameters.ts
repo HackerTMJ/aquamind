@@ -77,7 +77,7 @@ export const WATER_PARAMETERS: Record<string, TankTypeParameters> = {
       description: 'Carbonate hardness (alkalinity)',
     },
   },
-  
+
   saltwater: {
     temperature_c: {
       min: 22,
@@ -128,7 +128,7 @@ export const WATER_PARAMETERS: Record<string, TankTypeParameters> = {
       description: 'Nitrate concentration',
     },
   },
-  
+
   brackish: {
     temperature_c: {
       min: 20,
@@ -214,17 +214,17 @@ export function getParameterStatus(
   if (value >= parameter.optimal_min && value <= parameter.optimal_max) {
     return 'optimal';
   }
-  
+
   if (value >= parameter.min && value <= parameter.max) {
     return 'acceptable';
   }
-  
+
   // Outside acceptable range but not critically dangerous
   const tolerance = (parameter.max - parameter.min) * 0.1;
   if (value >= parameter.min - tolerance && value <= parameter.max + tolerance) {
     return 'caution';
   }
-  
+
   return 'danger';
 }
 
@@ -232,8 +232,8 @@ export function getParameterStatus(
  * Convert between temperature units
  */
 export const temperatureUtils = {
-  celsiusToFahrenheit: (celsius: number): number => (celsius * 9/5) + 32,
-  fahrenheitToCelsius: (fahrenheit: number): number => (fahrenheit - 32) * 5/9,
+  celsiusToFahrenheit: (celsius: number): number => (celsius * 9) / 5 + 32,
+  fahrenheitToCelsius: (fahrenheit: number): number => ((fahrenheit - 32) * 5) / 9,
 };
 
 export default WATER_PARAMETERS;
