@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Card, TextInput, Button, Text, ActivityIndicator, useTheme } from 'react-native-paper';
 import { Link } from 'expo-router';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { validateEmail } from '@/lib/utils/validation';
+import { useCustomAlert } from '@/components/ui/CustomAlert';
 
 export default function ForgotPasswordScreen() {
   const [email, setEmail] = useState('');
@@ -13,6 +15,7 @@ export default function ForgotPasswordScreen() {
 
   const { resetPassword } = useAuth();
   const theme = useTheme();
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const handleResetPassword = async () => {
     // Reset errors
@@ -32,12 +35,12 @@ export default function ForgotPasswordScreen() {
       const { error } = await resetPassword(email);
 
       if (error) {
-        Alert.alert('Reset Failed', error.message);
+        showAlert('Reset Failed', error.message, undefined, 'error');
       } else {
         setEmailSent(true);
       }
     } catch {
-      Alert.alert('Error', 'An unexpected error occurred');
+      showAlert('Error', 'An unexpected error occurred', undefined, 'error');
     } finally {
       setLoading(false);
     }
@@ -45,96 +48,107 @@ export default function ForgotPasswordScreen() {
 
   if (emailSent) {
     return (
+      <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <View style={styles.headerContainer}>
+            <Text variant='headlineMedium' style={[styles.title, { color: theme.colors.primary }]}>
+              Check Your Email
+            </Text>
+            <Text
+              variant='bodyLarge'
+              style={[styles.subtitle, { color: theme.colors.onSurfaceVariant }]}
+            >
+              We&apos;ve sent a password reset link to {email}
+            </Text>
+          </View>
+
+          <Card style={styles.card}>
+            <Card.Content>
+              <Text variant='bodyMedium' style={{ textAlign: 'center', marginBottom: 16 }}>
+                Please check your email and follow the link to reset your password.
+              </Text>
+
+              <Button mode='contained' onPress={() => setEmailSent(false)} style={styles.button}>
+                Send Another Email
+              </Button>
+
+              <Link href='/(auth)/login' asChild>
+                <Button mode='text' style={styles.button}>
+                  Back to Sign In
+                </Button>
+              </Link>
+            </Card.Content>
+          </Card>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
+
+  return (
+    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
         <View style={styles.headerContainer}>
           <Text variant='headlineMedium' style={[styles.title, { color: theme.colors.primary }]}>
-            Check Your Email
+            Reset Password
           </Text>
           <Text
             variant='bodyLarge'
             style={[styles.subtitle, { color: theme.colors.onSurfaceVariant }]}
           >
-            We&apos;ve sent a password reset link to {email}
+            Enter your email to receive a reset link
           </Text>
         </View>
 
         <Card style={styles.card}>
           <Card.Content>
-            <Text variant='bodyMedium' style={{ textAlign: 'center', marginBottom: 16 }}>
-              Please check your email and follow the link to reset your password.
-            </Text>
+            <TextInput
+              label='Email'
+              value={email}
+              onChangeText={setEmail}
+              keyboardType='email-address'
+              autoCapitalize='none'
+              autoComplete='email'
+              error={!!emailError}
+              style={styles.input}
+            />
+            {emailError ? (
+              <Text variant='bodySmall' style={[styles.errorText, { color: theme.colors.error }]}>
+                {emailError}
+              </Text>
+            ) : null}
 
-            <Button mode='contained' onPress={() => setEmailSent(false)} style={styles.button}>
-              Send Another Email
+            <Button
+              mode='contained'
+              onPress={handleResetPassword}
+              disabled={loading}
+              style={styles.button}
+            >
+              {loading ? <ActivityIndicator color={theme.colors.onPrimary} /> : 'Send Reset Email'}
             </Button>
-
-            <Link href='/(auth)/login' asChild>
-              <Button mode='text' style={styles.button}>
-                Back to Sign In
-              </Button>
-            </Link>
           </Card.Content>
         </Card>
+
+        <View style={styles.linkContainer}>
+          <Text variant='bodyMedium' style={{ color: theme.colors.onSurfaceVariant }}>
+            Remember your password?{' '}
+          </Text>
+          <Link href='/(auth)/login' asChild>
+            <Button mode='text'>Sign In</Button>
+          </Link>
+        </View>
+
+        {/* Custom Alert */}
+        <AlertComponent />
       </ScrollView>
-    );
-  }
-
-  return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.headerContainer}>
-        <Text variant='headlineMedium' style={[styles.title, { color: theme.colors.primary }]}>
-          Reset Password
-        </Text>
-        <Text
-          variant='bodyLarge'
-          style={[styles.subtitle, { color: theme.colors.onSurfaceVariant }]}
-        >
-          Enter your email to receive a reset link
-        </Text>
-      </View>
-
-      <Card style={styles.card}>
-        <Card.Content>
-          <TextInput
-            label='Email'
-            value={email}
-            onChangeText={setEmail}
-            keyboardType='email-address'
-            autoCapitalize='none'
-            autoComplete='email'
-            error={!!emailError}
-            style={styles.input}
-          />
-          {emailError ? (
-            <Text variant='bodySmall' style={[styles.errorText, { color: theme.colors.error }]}>
-              {emailError}
-            </Text>
-          ) : null}
-
-          <Button
-            mode='contained'
-            onPress={handleResetPassword}
-            disabled={loading}
-            style={styles.button}
-          >
-            {loading ? <ActivityIndicator color={theme.colors.onPrimary} /> : 'Send Reset Email'}
-          </Button>
-        </Card.Content>
-      </Card>
-
-      <View style={styles.linkContainer}>
-        <Text variant='bodyMedium' style={{ color: theme.colors.onSurfaceVariant }}>
-          Remember your password?{' '}
-        </Text>
-        <Link href='/(auth)/login' asChild>
-          <Button mode='text'>Sign In</Button>
-        </Link>
-      </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
   container: {
     flex: 1,
   },

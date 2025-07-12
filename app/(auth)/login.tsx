@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, Alert, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, Dimensions } from 'react-native';
 import {
   TextInput,
   Button,
@@ -11,8 +11,11 @@ import {
 } from 'react-native-paper';
 import { Link, router } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '@/lib/contexts/AuthContext';
 import { validateEmail, validatePassword } from '@/lib/utils/validation';
+import { TransitionOverlay } from '@/components/ui/TransitionOverlay';
+import { useCustomAlert } from '@/components/ui/CustomAlert';
 
 const { width } = Dimensions.get('window');
 
@@ -23,9 +26,11 @@ export default function LoginScreen() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
 
   const { signIn } = useAuth();
   const theme = useTheme();
+  const { showAlert, AlertComponent } = useCustomAlert();
 
   const handleLogin = async () => {
     // Reset errors
@@ -52,149 +57,178 @@ export default function LoginScreen() {
       const { error } = await signIn(email, password);
 
       if (error) {
-        Alert.alert('Login Failed', error.message);
+        showAlert('Login Failed', error.message, undefined, 'error');
+        setLoading(false);
       } else {
-        router.replace('/(tabs)');
+        // Successful login - start transition animation
+        setShowTransition(true);
       }
     } catch {
-      Alert.alert('Error', 'An unexpected error occurred');
-    } finally {
+      showAlert('Error', 'An unexpected error occurred', undefined, 'error');
       setLoading(false);
     }
   };
 
+  const handleTransitionComplete = () => {
+    setLoading(false);
+    setShowTransition(false);
+    router.replace('/(tabs)');
+  };
+
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={[theme.colors.primaryContainer, theme.colors.surface]}
-        style={styles.gradient}
-      >
-        <ScrollView
-          style={styles.scrollView}
-          contentContainerStyle={styles.contentContainer}
-          showsVerticalScrollIndicator={false}
+    <SafeAreaView style={styles.safeArea} edges={['top', 'bottom']}>
+      <View style={styles.container}>
+        <LinearGradient
+          colors={[theme.colors.primaryContainer, theme.colors.surface]}
+          style={styles.gradient}
         >
-          {/* Header Section */}
-          <View style={styles.headerContainer}>
-            <Surface style={[styles.logoContainer, { backgroundColor: theme.colors.primary }]}>
-              <IconButton icon='fish' size={32} iconColor={theme.colors.onPrimary} />
-            </Surface>
-            <Text
-              variant='displaySmall'
-              style={[styles.title, { color: theme.colors.onBackground }]}
-            >
-              Welcome Back
-            </Text>
-            <Text
-              variant='titleMedium'
-              style={[styles.subtitle, { color: theme.colors.onSurfaceVariant }]}
-            >
-              Sign in to continue your aquarium journey
-            </Text>
-          </View>
-
-          {/* Login Form */}
-          <Surface
-            style={[styles.formContainer, { backgroundColor: theme.colors.surface }]}
-            elevation={2}
+          <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={styles.contentContainer}
+            showsVerticalScrollIndicator={false}
           >
-            <View style={styles.formContent}>
-              <TextInput
-                label='Email Address'
-                value={email}
-                onChangeText={setEmail}
-                keyboardType='email-address'
-                autoCapitalize='none'
-                autoComplete='email'
-                error={!!emailError}
-                mode='outlined'
-                left={<TextInput.Icon icon='email' />}
-                style={styles.input}
-              />
-              {emailError ? (
-                <Text variant='bodySmall' style={[styles.errorText, { color: theme.colors.error }]}>
-                  {emailError}
-                </Text>
-              ) : null}
-
-              <TextInput
-                label='Password'
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
-                autoComplete='password'
-                error={!!passwordError}
-                mode='outlined'
-                left={<TextInput.Icon icon='lock' />}
-                right={
-                  <TextInput.Icon
-                    icon={showPassword ? 'eye-off' : 'eye'}
-                    onPress={() => setShowPassword(!showPassword)}
-                  />
-                }
-                style={styles.input}
-              />
-              {passwordError ? (
-                <Text variant='bodySmall' style={[styles.errorText, { color: theme.colors.error }]}>
-                  {passwordError}
-                </Text>
-              ) : null}
-
-              <Button
-                mode='contained'
-                onPress={handleLogin}
-                disabled={loading}
-                style={styles.loginButton}
-                contentStyle={styles.loginButtonContent}
+            {/* Header Section */}
+            <View style={styles.headerContainer}>
+              <Surface style={[styles.logoContainer, { backgroundColor: theme.colors.primary }]}>
+                <IconButton icon='fish' size={32} iconColor={theme.colors.onPrimary} />
+              </Surface>
+              <Text
+                variant='displaySmall'
+                style={[styles.title, { color: theme.colors.onBackground }]}
               >
-                {loading ? (
-                  <ActivityIndicator color={theme.colors.onPrimary} size='small' />
-                ) : (
-                  'Sign In'
-                )}
-              </Button>
-
-              <View style={styles.forgotPasswordContainer}>
-                <Link href='/(auth)/forgot-password' asChild>
-                  <Button mode='text' textColor={theme.colors.primary}>
-                    Forgot your password?
-                  </Button>
-                </Link>
-              </View>
+                Welcome Back
+              </Text>
+              <Text
+                variant='titleMedium'
+                style={[styles.subtitle, { color: theme.colors.onSurfaceVariant }]}
+              >
+                Sign in to continue your aquarium journey
+              </Text>
             </View>
-          </Surface>
 
-          {/* Divider */}
-          <View style={styles.dividerContainer}>
-            <View style={[styles.dividerLine, { backgroundColor: theme.colors.outline }]} />
-            <Text
-              variant='bodySmall'
-              style={[styles.dividerText, { color: theme.colors.onSurfaceVariant }]}
+            {/* Login Form */}
+            <Surface
+              style={[styles.formContainer, { backgroundColor: theme.colors.surface }]}
+              elevation={2}
             >
-              New to AquaMind?
-            </Text>
-            <View style={[styles.dividerLine, { backgroundColor: theme.colors.outline }]} />
-          </View>
+              <View style={styles.formContent}>
+                <TextInput
+                  label='Email Address'
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType='email-address'
+                  autoCapitalize='none'
+                  autoComplete='email'
+                  error={!!emailError}
+                  mode='outlined'
+                  left={<TextInput.Icon icon='email' />}
+                  style={styles.input}
+                />
+                {emailError ? (
+                  <Text
+                    variant='bodySmall'
+                    style={[styles.errorText, { color: theme.colors.error }]}
+                  >
+                    {emailError}
+                  </Text>
+                ) : null}
 
-          {/* Sign Up Section */}
-          <View style={styles.signUpContainer}>
-            <Link href='/(auth)/register' asChild>
-              <Button
-                mode='outlined'
-                style={styles.signUpButton}
-                contentStyle={styles.signUpButtonContent}
+                <TextInput
+                  label='Password'
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!showPassword}
+                  autoComplete='password'
+                  error={!!passwordError}
+                  mode='outlined'
+                  left={<TextInput.Icon icon='lock' />}
+                  right={
+                    <TextInput.Icon
+                      icon={showPassword ? 'eye-off' : 'eye'}
+                      onPress={() => setShowPassword(!showPassword)}
+                    />
+                  }
+                  style={styles.input}
+                />
+                {passwordError ? (
+                  <Text
+                    variant='bodySmall'
+                    style={[styles.errorText, { color: theme.colors.error }]}
+                  >
+                    {passwordError}
+                  </Text>
+                ) : null}
+
+                <Button
+                  mode='contained'
+                  onPress={handleLogin}
+                  disabled={loading}
+                  style={styles.loginButton}
+                  contentStyle={styles.loginButtonContent}
+                >
+                  {loading ? (
+                    <ActivityIndicator color={theme.colors.onPrimary} size='small' />
+                  ) : (
+                    'Sign In'
+                  )}
+                </Button>
+
+                <View style={styles.forgotPasswordContainer}>
+                  <Link href='/(auth)/forgot-password' asChild>
+                    <Button mode='text' textColor={theme.colors.primary}>
+                      Forgot your password?
+                    </Button>
+                  </Link>
+                </View>
+              </View>
+            </Surface>
+
+            {/* Divider */}
+            <View style={styles.dividerContainer}>
+              <View style={[styles.dividerLine, { backgroundColor: theme.colors.outline }]} />
+              <Text
+                variant='bodySmall'
+                style={[styles.dividerText, { color: theme.colors.onSurfaceVariant }]}
               >
-                Create Account
-              </Button>
-            </Link>
-          </View>
-        </ScrollView>
-      </LinearGradient>
-    </View>
+                New to AquaMind?
+              </Text>
+              <View style={[styles.dividerLine, { backgroundColor: theme.colors.outline }]} />
+            </View>
+
+            {/* Sign Up Section */}
+            <View style={styles.signUpContainer}>
+              <Link href='/(auth)/register' asChild>
+                <Button
+                  mode='outlined'
+                  style={styles.signUpButton}
+                  contentStyle={styles.signUpButtonContent}
+                >
+                  Create Account
+                </Button>
+              </Link>
+            </View>
+          </ScrollView>
+        </LinearGradient>
+
+        {/* Transition Animation Overlay */}
+        <TransitionOverlay
+          visible={showTransition}
+          onAnimationComplete={handleTransitionComplete}
+          duration={500} // Fast and snappy animation
+        />
+
+        {/* Custom Alert */}
+        <AlertComponent />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
   container: {
     flex: 1,
   },

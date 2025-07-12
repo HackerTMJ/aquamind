@@ -1,37 +1,44 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Card, Text, useTheme } from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function MonitoringScreen() {
   const theme = useTheme();
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <Text variant='headlineSmall' style={[styles.title, { color: theme.colors.onBackground }]}>
-        Water Monitoring
-      </Text>
+    <SafeAreaView style={styles.safeArea} edges={['top']}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <Text variant='headlineSmall' style={[styles.title, { color: theme.colors.onBackground }]}>
+          Water Monitoring
+        </Text>
 
-      <Card style={styles.emptyCard}>
-        <Card.Content style={styles.emptyContent}>
-          <Text
-            variant='titleMedium'
-            style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}
-          >
-            No monitoring data yet
-          </Text>
-          <Text
-            variant='bodyMedium'
-            style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 8 }}
-          >
-            Start monitoring your water parameters to keep your fish healthy
-          </Text>
-        </Card.Content>
-      </Card>
-    </ScrollView>
+        <Card style={styles.emptyCard}>
+          <Card.Content style={styles.emptyContent}>
+            <Text
+              variant='titleMedium'
+              style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}
+            >
+              No monitoring data yet
+            </Text>
+            <Text
+              variant='bodyMedium'
+              style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center', marginTop: 8 }}
+            >
+              Start monitoring your water parameters to keep your fish healthy
+            </Text>
+          </Card.Content>
+        </Card>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
   container: {
     flex: 1,
   },
