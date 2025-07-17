@@ -120,7 +120,7 @@ export const validateFish = (fish: {
 export const validateWaterParameter = (
   parameter: string,
   value: number,
-  tankType: string = 'freshwater'
+  _tankType: string = 'freshwater'
 ): ValidationResult => {
   const errors: string[] = [];
 
@@ -285,7 +285,7 @@ export const validateEmail = (email: string): ValidationResult => {
 /**
  * Generic required field validation
  */
-export const validateRequired = (value: any, fieldName: string): ValidationResult => {
+export const validateRequired = (value: unknown, fieldName: string): ValidationResult => {
   const errors: string[] = [];
 
   if (value === null || value === undefined || value === '') {

@@ -57,6 +57,23 @@ export default [
     },
   },
   {
+    // Node.js configuration files
+    files: ['*.config.js', 'babel.config.js', 'metro.config.js'],
+    languageOptions: {
+      globals: {
+        module: 'readonly',
+        require: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        process: 'readonly',
+        console: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off',
+    },
+  },
+  {
     files: ['**/*.test.{ts,tsx,js,jsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',

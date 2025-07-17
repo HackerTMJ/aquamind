@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
+    paddingBottom: 140, // Adjust for higher navbar position
   },
   title: {
     marginBottom: 16,
@@ -77,6 +78,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 16,
     right: 0,
-    bottom: 0,
+    bottom: 120, // Adjust for higher navbar position
   },
 });

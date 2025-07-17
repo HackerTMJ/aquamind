@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 16,
+    paddingBottom: 140, // Adjust for higher navbar position
   },
   title: {
     marginBottom: 16,

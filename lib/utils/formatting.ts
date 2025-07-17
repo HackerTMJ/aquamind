@@ -2,6 +2,10 @@
  * General utility functions for AquaMind
  */
 
+// Import timer functions for React Native
+declare const setTimeout: (callback: () => void, ms: number) => number;
+declare const clearTimeout: (timeoutId: number) => void;
+
 /**
  * Format numbers for display
  */
@@ -100,11 +104,11 @@ export const deepClone = <T>(obj: T): T => {
 /**
  * Debounce function calls
  */
-export const debounce = <T extends (...args: any[]) => any>(
+export const debounce = <T extends (...args: unknown[]) => unknown>(
   func: T,
   wait: number
 ): ((...args: Parameters<T>) => void) => {
-  let timeout: NodeJS.Timeout;
+  let timeout: number;
 
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
@@ -115,7 +119,7 @@ export const debounce = <T extends (...args: any[]) => any>(
 /**
  * Check if value is empty (null, undefined, empty string, empty array)
  */
-export const isEmpty = (value: any): boolean => {
+export const isEmpty = (value: unknown): boolean => {
   if (value == null) return true;
   if (typeof value === 'string') return value.trim().length === 0;
   if (Array.isArray(value)) return value.length === 0;

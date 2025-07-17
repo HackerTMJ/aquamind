@@ -11,6 +11,7 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/components/useColorScheme';
 import { AuthProvider } from '@/lib/contexts/AuthContext';
 import { AppThemeProvider } from '@/lib/contexts/ThemeContext';
+import '@/lib/i18n'; // Initialize i18n
 
 export {
   // Catch any errors thrown by the Layout component.
